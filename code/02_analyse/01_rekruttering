@@ -1,0 +1,140 @@
+library(ggplot2)
+library(gridExtra)
+library(cowplot)
+
+data <- readRDS("05_data/data_weighted_final_resp.rds")
+
+Q3 <- data %>%
+  group_by(Q3) %>%
+  tally() %>%
+  mutate(share = n/sum(n),
+         quest = "I hvilken grad består arbejdet i lokalforeningen i \nat opsøge og rekruttere kandidater op til kommunalvalg?",
+         scale = Q3) %>%
+  select(!Q3)
+  
+Q4_1 <- data %>%
+  group_by(Q4_1_resp) %>%
+  tally() %>%
+  mutate(share = n/sum(n),
+         quest = "Potentielle kandidater opsøger selvstændigt opstilling for partiet",
+         scale = Q4_1_resp) %>%
+  select(!Q4_1_resp)
+
+Q4_3 <- data %>%
+  group_by(Q4_3_resp) %>%
+  tally() %>%
+  mutate(share = n/sum(n),
+         quest = "Kandidater bliver typisk opfordret til at stille \nop af ledende medlemmer af lokalforeningen",
+         scale = Q4_3_resp) %>%
+  select(!Q4_3_resp)
+
+Q4_4 <- data %>%
+  group_by(Q4_4_resp) %>%
+  tally() %>%
+  mutate(share = n/sum(n),
+         quest = "Kandidater bliver typisk opfordret til at stille op af ledende medlemmer af lokalforeningen",
+         scale = Q4_4_resp) %>%
+  select(!Q4_4_resp)
+
+p1 <- survey_besva %>%
+  ggplot(aes(x = Q3, fill = Q3)) + 
+  geom_bar(aes(y = ((..count..)/sum(..count..)) * 100)) +
+  labs(subtitle ="I hvilken grad består arbejdet i lokalforeningen i at opsøge og rekruttere kandidater op til kommunalvalg?", align = TRUE, x="", y = "Procent %") +  
+  theme_minimal() +
+  scale_fill_grey() +
+  theme(strip.background = element_rect(fill = "white"),
+        strip.text = element_text(size = 10, colour = "black"),
+        panel.grid.major = element_blank(), 
+        panel.grid.minor = element_blank(),
+        axis.line = element_blank(),
+        panel.background = element_rect(fill = "white", 
+                                        colour = "black",
+                                        size = 1),
+        legend.position = "") +
+  guides(fill = guide_legend(nrow = 1))
+
+p1
+
+ggsave(filename = "06_Analyse/02_results/fordeling_Q3.png",
+       plot = p1, 
+       width = 8, 
+       height = 3, 
+       dpi = 320)
+
+p2 <- survey_besva %>%
+  ggplot(aes(x = Q4_1_resp, fill = Q4_1_resp)) + 
+  geom_bar(aes(y = ((..count..)/sum(..count..)) * 100)) +
+  labs(subtitle ="Potentielle kandidater opsøger selvstændigt opstilling for partiet", align = TRUE, x="", y = "Procent %") +  
+  theme_minimal() +
+  ylim(0, 60) +
+  scale_fill_grey() +
+  theme(strip.background = element_rect(fill = "white"),
+        strip.text = element_text(size = 10, colour = "black"),
+        panel.grid.major = element_blank(), 
+        panel.grid.minor = element_blank(),
+        axis.line = element_blank(),
+        panel.background = element_rect(fill = "white", 
+                                        colour = "black",
+                                        size = 1),
+        legend.position = "") +
+  guides(fill = guide_legend(nrow = 1))
+
+p2
+
+ggsave(filename = "06_Analyse/02_results/fordeling_Q4_4.png",
+       plot = p2, 
+       width = 8, 
+       height = 3, 
+       dpi = 320)
+
+p3 <- survey_besva %>%
+  ggplot(aes(x = Q4_4_resp, fill=Q4_4_resp)) + 
+  geom_bar(aes(y = ((..count..)/sum(..count..)) * 100)) +
+  labs(subtitle ="Kandidater bliver typisk opfordret til at stille op af ledende medlemmer af lokalforeningen", align = TRUE, x="", y = "Procent %") +  
+  theme_minimal() +
+  ylim(0, 60) +
+  scale_fill_grey() +
+  theme(strip.background = element_rect(fill = "white"),
+        strip.text = element_text(size = 10, colour = "black"),
+        panel.grid.major = element_blank(), 
+        panel.grid.minor = element_blank(),
+        axis.line = element_blank(),
+        panel.background = element_rect(fill = "white", 
+                                        colour = "black",
+                                        size = 1),
+        legend.position = "") +
+  guides(fill = guide_legend(nrow = 1))
+
+p3
+
+ggsave(filename = "06_Analyse/02_results/fordeling_Q4_1.png",
+       plot = p3, 
+       width = 8, 
+       height = 3, 
+       dpi = 320)
+
+Q5_1 <- survey_besva %>%
+  group_by(Q5_1_resp) %>%
+  tally() %>%
+  mutate(share = n/sum(n),
+         quest = "Kvinder",
+         scale = Q5_1_resp) %>%
+  select(!Q5_1_resp)
+
+
+Q5_2 <- survey_besva %>%
+  group_by(Q5_2_resp) %>%
+  tally() %>%
+  mutate(share = n/sum(n),
+         quest = "Mænd",
+         scale = Q5_2_resp) %>%
+  select(!Q5_2_resp)
+
+
+Q5_3 <- survey_besva %>%
+  group_by(Q5_3_resp) %>%
+  tally() %>%
+  mutate(share = n/sum(n),
+         quest = "Minoriteter",
+         scale = Q5_3_resp) %>%
+  select(!Q5_3_resp)
