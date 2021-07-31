@@ -5,7 +5,7 @@ profilegenskaber_df<-read.xlsx("02_Opsætning/Design.file.And.Labelling.NEW.Cond
 # Load conjoint-svarfil
 conjoint_output_df<-read.csv(file="05_data/10080_CBC_data.csv", header=T)
 
-# Fjern dublicates
+# Fjern dubli
 conjoint_output_df<-conjoint_output_df %>%
   arrange(desc(sys_StartTime))
 
