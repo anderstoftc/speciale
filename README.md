@@ -1,2 +1,4 @@
 # speciale
-Dokumentation for speciale i statskundskab
+Dokumentation for speciale.
+Anders Toft Christensen og Gunnhild Árnadóttir 
+Københavns Universitet - Institut for statskundskab
